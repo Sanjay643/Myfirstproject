@@ -25,6 +25,11 @@ public class Contact implements Serializable {
 			long userId;
 			System.out.println("Enter Name:");
 			name = scan.nextLine();
+			if(!((name!=null)&&(!name.equals(""))&& (name.chars().allMatch(Character::isLetter))&&(name.length()<25)))
+			{
+				System.out.println("Enter a valid name with alphabets:");
+				name = scan.nextLine();
+			}
 			System.out.println("Enter Email:");
 			email = scan.nextLine();
 			if(!email.contains("@"))
@@ -149,36 +154,18 @@ public class Contact implements Serializable {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		Map<String, Long> eMap = new LinkedHashMap<>();
-		Map<String, Long> nMap = new LinkedHashMap<>();
-		Map<Long, ContactDetail> uid = new LinkedHashMap<>();
-		try {
-			FileInputStream fis1=new FileInputStream("C:\\Myproject\\src\\eMap.txt");
-			FileInputStream fis2=new FileInputStream("C:\\Myproject\\src\\nMap.txt");
-			FileInputStream fis3=new FileInputStream("C:\\Myproject\\src\\uid.txt");
-			ObjectInputStream ois1=new ObjectInputStream(fis1);
-			ObjectInputStream ois2=new ObjectInputStream(fis2);
-			ObjectInputStream ois3=new ObjectInputStream(fis3);
-			eMap=(LinkedHashMap)ois1.readObject();
-			nMap=(LinkedHashMap)ois2.readObject();
-			uid=(LinkedHashMap)ois3.readObject();
-			
-		}
-		catch(Exception e) {
-			System.out.println("There is no file!!");
-		}
-		FileOutputStream fos1=new FileOutputStream("C:\\Myproject\\src\\eMap.txt");
-		FileOutputStream fos2=new FileOutputStream("C:\\Myproject\\src\\nMap.txt");
-		FileOutputStream fos3=new FileOutputStream("C:\\Myproject\\src\\uid.txt");
-		ObjectOutputStream oos1=new ObjectOutputStream(fos1);
-		ObjectOutputStream oos2=new ObjectOutputStream(fos2);
-		ObjectOutputStream oos3=new ObjectOutputStream(fos3);
+		Map<String, Long> eMap = new EmailIndex();
+		Map<String, Long> nMap = new NameIndex();
+		Map<Long, ContactDetail> uid = new UidIndex();
+		
+		eMap=((EmailIndex) eMap).readData();
+		nMap=((NameIndex) nMap).readData();
+		uid=((UidIndex) uid).readData();
 		
 		
 		
 		while (true) {
-			System.out.println(
-					"Enter an option below:\n 1.Create contact\n 2.Search contact\n 3.Update contact\n 4.Delete contact\n 5.List all contact\n 6.Exit\n");
+			System.out.println("Enter an option below:\n 1>>Create contact\n 2>>Search contact\n 3>>Update contact\n 4>>Delete contact\n 5>>List all contact\n 6>>Exit\n");
 			int option = scan.nextInt();
 			scan.nextLine();
 			switch (option) {
@@ -198,10 +185,10 @@ public class Contact implements Serializable {
 				display(uid);
 				break;
 			case 6:
-				System.out.println("Exit Successfully");
-				oos1.writeObject(eMap);
-				oos2.writeObject(nMap);
-				oos3.writeObject(uid);
+				System.out.println("Exit Successfully..Thanks for using my application");
+				((EmailIndex) eMap).writeData();
+			    ((NameIndex) nMap).writeData();
+				((UidIndex) uid).writeData();
 				System.exit(0);
 				break;
 			default:
@@ -210,7 +197,9 @@ public class Contact implements Serializable {
 				}
 
 			}
+						
 		}
+	
 
 	}
 

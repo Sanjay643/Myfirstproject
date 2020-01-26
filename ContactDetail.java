@@ -44,21 +44,10 @@ public class ContactDetail implements Serializable {
 		
 		
 	}
-	/*public long getUserId()
-	{
-		return userId;
-	}
-	public void setUserId(long userId)
-	{
-		this.userId = userId;
-	}*/
 	public String toString()
 	{
-		return "UserId:"+userId+"\t"+"Name:"+name+"\t"+"Email:"+email+"\t"+"Address:"+address+"\t"+"Phone number: 91+"+phone+"\n";
+		return "UserId:"+userId+"\t"+"Name:"+name+"\t"+"Email:"+email+"\t"+"Address:"+address+"\t"+"Phone number:"+phone+"\n";
 	}
 	
-	//public static void main(String[] args)
-	//{
-		
-	//}
+	
 }
